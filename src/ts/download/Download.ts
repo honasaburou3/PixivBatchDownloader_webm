@@ -23,6 +23,7 @@ import { states } from '../store/States'
 import { Tools } from '../Tools'
 import { downloadStates } from './DownloadStates'
 import { downloadInterval } from './DownloadInterval'
+import { convertImageToWebP } from './ConvertImageToWebP'
 import { NovelMeta, Result } from '../store/StoreType'
 
 // 下载抓取结果里的一个文件
@@ -126,13 +127,18 @@ class Download {
       return
     }
 
+    // 转换为 WebP 时需要使用原图，之后再在本地缩小到指定尺寸
+    const shouldConvertImageToWebP =
+      settings.convertImageToWebP && (result.type === 0 || result.type === 1)
     // 下载图像作品
     // 如果设置了图片尺寸就使用指定的 url，否则使用原图 url
-    const url = result[settings.imageSize] || result.original
+    const url = shouldConvertImageToWebP
+      ? result.original
+      : result[settings.imageSize] || result.original
 
     // 检查 url 的扩展名，如果与文件名里的扩展名不同，则重设文件名
     // 常见的情况是：一些图片的原图的扩展名是 .png，但其他尺寸的扩展名是 .jpg。如果用户下载的图片尺寸不是原图，就在这里把扩展名从 .png 改成 .jpg。虽然这个操作不是必须的，但更符合实际情况，也可以减少用户的困惑
-    if (settings.imageSize !== 'original') {
+    if (!shouldConvertImageToWebP && settings.imageSize !== 'original') {
       _fileName = Utils.replaceExtension(_fileName, url)
       this.setProgressBar(_fileName, 0, 0)
     }
@@ -215,6 +221,16 @@ class Download {
           _fileName = lastName
           this.setProgressBar(lastName, file.size, file.size)
         }
+      }
+
+      // 将插画和漫画转换为 WebP 图片
+      if (
+        shouldConvertImageToWebP &&
+        (file.type === 'image/jpeg' || file.type === 'image/png')
+      ) {
+        file = await convertImageToWebP.convert(file)
+        _fileName = Utils.replaceExtension(_fileName, '.webp')
+        this.setProgressBar(_fileName, file.size, file.size)
       }
 
       if (this.cancel) {

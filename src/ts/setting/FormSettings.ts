@@ -162,6 +162,7 @@ class FormSettings {
       'clickSettingNameOpenWiki',
       'downloadIntervalSwitch',
       'saveAllSeriesNovelsIfOneMatches',
+      'convertImageToWebP',
     ],
     radio: [
       'novelSaveAs',
@@ -327,8 +328,7 @@ class FormSettings {
   // 处理复选框： click 时保存 checked
   private saveCheckBox(name: SettingKeys) {
     const el = this.form[name] as
-      | HTMLInputElement
-      | NodeListOf<HTMLInputElement>
+      HTMLInputElement | NodeListOf<HTMLInputElement>
     let elArray: HTMLInputElement[] = []
     if ((el as NodeListOf<HTMLInputElement>).length !== undefined) {
       elArray = Array.from(el as NodeListOf<HTMLInputElement>)
@@ -356,8 +356,7 @@ class FormSettings {
   private restoreBoolean(name: SettingKeys) {
     if (settings[name] !== undefined) {
       const el = this.form[name] as
-        | HTMLInputElement
-        | NodeListOf<HTMLInputElement>
+        HTMLInputElement | NodeListOf<HTMLInputElement>
 
       if (!el) {
         // 找不到该设置对应的 input 元素

@@ -59,11 +59,7 @@ import { PageName } from '../PageType'
 import { ppdTask } from '../PPDTask'
 
 export type OptionCategoryLevel1 =
-  | 'crawl'
-  | 'naming'
-  | 'download'
-  | 'enhance'
-  | 'general'
+  'crawl' | 'naming' | 'download' | 'enhance' | 'general'
 
 /** 保存每个可折叠区域的展开/折叠状态 */
 type ExpandedCards = {
@@ -198,6 +194,8 @@ interface XzSetting {
   fullNameLengthLimit: number
   /** 图片尺寸。original 原图, regular 普通, small 小图, thumb 方形缩略图 */
   imageSize: 'original' | 'regular' | 'small' | 'thumb'
+  /** 下载插画、漫画时转换为 WebP 图片 */
+  convertImageToWebP: boolean
   dateFormat: string
   userSetLang: 'zh-cn' | 'zh-tw' | 'ja' | 'en' | 'ko' | 'ru' | 'auto'
   bmkAfterDL: boolean
@@ -725,6 +723,7 @@ class Settings {
     /** 完整文件名（包含文件夹、文件名、扩展名）的长度限制 */
     fullNameLengthLimit: 210,
     imageSize: 'original',
+    convertImageToWebP: false,
     dateFormat: 'YYYY-MM-DD',
     userSetLang: 'auto',
     bmkAfterDL: false,

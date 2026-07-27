@@ -3538,6 +3538,14 @@ Note: This clears the downloader's download record, not the browser's download h
     '일러스트, 만화, 애니메이션을 다운로드할 때의 <span class="key">크기</span>',
     'Размер <span class="key">изображения</span> при загрузке иллюстраций, манги и анимаций',
   ],
+  _下载插画漫画时转换为WebP: [
+    `下载插画、漫画时转换为 WebP 图片`,
+    `下載插畫、漫畫時轉換為 WebP 圖片`,
+    `Convert illustrations and manga to WebP when downloading`,
+    `イラスト・マンガをダウンロード時に WebP 画像へ変換`,
+    `일러스트와 만화를 다운로드할 때 WebP 이미지로 변환`,
+    `Конвертировать иллюстрации и мангу в WebP при скачивании`,
+  ],
   _图片尺寸: [
     '图片尺寸',
     '圖片尺寸',

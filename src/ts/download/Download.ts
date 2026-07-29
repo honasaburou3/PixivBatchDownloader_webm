@@ -228,8 +228,22 @@ class Download {
         shouldConvertImageToWebP &&
         (file.type === 'image/jpeg' || file.type === 'image/png')
       ) {
-        file = await convertImageToWebP.convert(file)
-        _fileName = Utils.replaceExtension(_fileName, '.webp')
+        const originalFile = file
+        const convertedFile = await convertImageToWebP.convert(
+          originalFile,
+          settings.convertImageToWebPQuality
+        )
+
+        if (
+          settings.saveOriginalIfWebPLarger &&
+          convertedFile.size > originalFile.size
+        ) {
+          file = originalFile
+        } else {
+          file = convertedFile
+          _fileName = Utils.replaceExtension(_fileName, '.webp')
+        }
+
         this.setProgressBar(_fileName, file.size, file.size)
       }
 

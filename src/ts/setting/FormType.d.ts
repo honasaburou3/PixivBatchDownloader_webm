@@ -70,6 +70,8 @@ export interface FormType extends HTMLFormElement {
   tagsSeparator: HTMLInputElement
   imageSize: RadioNodeList
   convertImageToWebP: HTMLInputElement
+  convertImageToWebPQuality: HTMLInputElement
+  saveOriginalIfWebPLarger: HTMLInputElement
   dateFormat: HTMLInputElement
   userSetLang: RadioNodeList
   bmkAfterDL: HTMLInputElement

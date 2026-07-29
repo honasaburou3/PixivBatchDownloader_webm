@@ -196,6 +196,10 @@ interface XzSetting {
   imageSize: 'original' | 'regular' | 'small' | 'thumb'
   /** 下载插画、漫画时转换为 WebP 图片 */
   convertImageToWebP: boolean
+  /** WebP 图片质量，范围为 70 到 100 */
+  convertImageToWebPQuality: number
+  /** 转换后的 WebP 更大时保存原文件 */
+  saveOriginalIfWebPLarger: boolean
   dateFormat: string
   userSetLang: 'zh-cn' | 'zh-tw' | 'ja' | 'en' | 'ko' | 'ru' | 'auto'
   bmkAfterDL: boolean
@@ -724,6 +728,8 @@ class Settings {
     fullNameLengthLimit: 210,
     imageSize: 'original',
     convertImageToWebP: false,
+    convertImageToWebPQuality: 85,
+    saveOriginalIfWebPLarger: true,
     dateFormat: 'YYYY-MM-DD',
     userSetLang: 'auto',
     bmkAfterDL: false,
@@ -1303,6 +1309,10 @@ class Settings {
       if (isNaN(value as number)) {
         const msg = lang.transl('_设置的值不正确需要是数字') + ' ' + key
         return msgBox.error(msg)
+      }
+
+      if (key === 'convertImageToWebPQuality') {
+        value = Math.min(100, Math.max(70, value as number))
       }
     }
 

@@ -9,14 +9,15 @@ class ConvertImageToWebP {
   /** 等待执行的图片转换任务 */
   private taskQueue: Array<{
     file: Blob
+    quality: number
     resolve: (file: Blob) => void
     reject: (reason?: unknown) => void
   }> = []
 
   /** 将 JPEG 或 PNG 图片缩小后转换为 WebP */
-  public convert(file: Blob): Promise<Blob> {
+  public convert(file: Blob, quality: number): Promise<Blob> {
     return new Promise((resolve, reject) => {
-      this.taskQueue.push({ file, resolve, reject })
+      this.taskQueue.push({ file, quality, resolve, reject })
       this.runNextTask()
     })
   }
@@ -30,7 +31,7 @@ class ConvertImageToWebP {
       const task = this.taskQueue.shift()!
       this.runningTaskCount++
 
-      void this.convertFile(task.file)
+      void this.convertFile(task.file, task.quality)
         .then(task.resolve, task.reject)
         .finally(() => {
           this.runningTaskCount--
@@ -40,7 +41,7 @@ class ConvertImageToWebP {
   }
 
   /** 执行实际的图片缩放和 WebP 编码 */
-  private async convertFile(file: Blob): Promise<Blob> {
+  private async convertFile(file: Blob, quality: number): Promise<Blob> {
     const image = await createImageBitmap(file)
 
     try {
@@ -66,12 +67,17 @@ class ConvertImageToWebP {
             }
           },
           'image/webp',
-          0.85
+          this.getQuality(quality)
         )
       })
     } finally {
       image.close()
     }
+  }
+
+  /** 将用户设置的质量限制在 70 到 100 之间 */
+  private getQuality(quality: number) {
+    return Math.min(100, Math.max(70, quality)) / 100
   }
 
   /** 计算保持比例且长边不超过 2048 px 的尺寸 */

@@ -163,6 +163,7 @@ class FormSettings {
       'downloadIntervalSwitch',
       'saveAllSeriesNovelsIfOneMatches',
       'convertImageToWebP',
+      'saveOriginalIfWebPLarger',
     ],
     radio: [
       'novelSaveAs',
@@ -238,6 +239,7 @@ class FormSettings {
       'onlyCrawlLastFewImagesCount',
       'doNotCrawlFirstImagesCount',
       'singleEPUBFileSizeLimit',
+      'convertImageToWebPQuality',
     ],
     textarea: [
       'notNeedTag',

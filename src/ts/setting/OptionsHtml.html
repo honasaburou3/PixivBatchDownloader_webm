@@ -2466,7 +2466,36 @@ __DEFAULT_NAME_RULE_FOR_NOVEL__</textarea>
         for="convertImageToWebP"
         data-xztext="_下载插画漫画时转换为WebP"
       ></label>
-      <span class="gray1">(2048px, 85%)</span>
+      <span> | </span>
+      <label for="convertImageToWebPQuality" data-xztext="_质量"></label>
+      <input
+        type="number"
+        name="convertImageToWebPQuality"
+        id="convertImageToWebPQuality"
+        class="setinput_style blue"
+        min="70"
+        max="100"
+        step="1"
+        value="85"
+      />
+      <span class="gray1">70-100</span>
+      <span class="gray1" data-xztext="_建议95及以下"></span>
+    </div>
+  </div>
+  <div class="subOptionWrap flexBasis100">
+    <div class="optionLine">
+      <input
+        type="checkbox"
+        name="saveOriginalIfWebPLarger"
+        id="saveOriginalIfWebPLarger"
+        class="need_beautify checkbox_common"
+        checked
+      />
+      <span class="beautify_checkbox" tabindex="0"></span>
+      <label
+        for="saveOriginalIfWebPLarger"
+        data-xztext="_转换后文件更大时保存原文件"
+      ></label>
     </div>
   </div>
 </div>
